@@ -10,33 +10,41 @@
 ---
 
 ## Finding Test Users
-You will need to find two test users. One acting as the customer/"end-user"-company and one as the supplier/organization. The following tools can be used to find test users:
+You will need to find two test users from Test-Norge. 
+* The first user is acting as the *supplier* (LPS - Lønns- og personalsystem)
+* The second user is acting as the *customer* ("end-user"-company that will use the LPS system)
+
+The following tools can be used to find test users:
 
 ### TestID
 The easiest way to find a random test user.
-1. Navigate to [Altinn Test Environment](https://tt02.altinn.no) and click **Logg inn**
-2. Click **TestID på nivå høyt**
-3. Click **Hent tilfeldig daglig leder**
+1. Navigate to [Altinn Test Environment](https://tt02.altinn.no) and click **Logg inn**.
+2. Click **TestID på nivå høyt**.
+3. Click **Hent tilfeldig daglig leder**.
 4. Take note of the organization number (*Organisasjonsnummer*) and social security number (*Personidentifikator*).
+5. You can click **Hent tilfeldig daglig leder** one more time to get the second test user.
 
-### Test-Norge
+### Tenor testdatasøk
 If you need more fine-grained control over the test users.
-- Navigate to [Test-Norge](https://testdata.skatteetaten.no/web/testnorge/soek/freg).
-- Locate test-users of your choice
-- Take note of the organization number and social security number.
+1. Navigate to [Tenor testdatasøk](https://testdata.skatteetaten.no/web/testnorge/soek/freg).
+2. You must log in with your personal user, e.g. **BankID**.
+3. Find test-users of your choice.
+4. Take note of the organization number and social security number.
 
 ---
 
 ## Delegating API Access in Altinn
-This section describes how to delegate API-access from a customer/"end-user"-company to a supplier, for instance LPS (Lønns- og personalsystem).
+This section describes how the customer/"end user" can delegate API-access to a supplier, for instance LPS (Lønns- og personalsystem).
 
 ### Step 1: Log into Altinn
-- Navigate to the [Altinn Test Environment](https://tt02.altinn.no).
-- Use your consumer test-user social security number.
-- Click "Autentiser".
+1. Navigate to the [Altinn Test Environment](https://tt02.altinn.no).
+2. Click **Logg inn**.
+3. Click **TestID på nivå høyt**.
+4. Use your customer/"end user" company test user's social security number.
+5. Click **Autentiser**.
 
 ### Step 2: Navigate to Delegable API
-1. Select the company you wish to delegate access to NAV's API.
+1. Select the company you wish to delegate access to NAV's API. This should be the customer/"end user" company
 2. Go to your profile.
 3. Select "Tilgang til programmeringsgrensesnitt – API".
 4. Click on "Gi og fjerne API tilganger".
