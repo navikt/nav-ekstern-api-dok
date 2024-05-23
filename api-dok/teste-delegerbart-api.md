@@ -67,8 +67,11 @@ This section describes how the customer can delegate API-access to a supplier.
     - Navigate to [Maskinporten Onboarding Pilot](https://onboarding.test.maskinporten.no/)
     - Log in using TestID with the supplier's social security number.
 2. **Create Integration:**
-    - Click "Legg til en offentlig tilgang"
-    - Velg integrasjonsmetode - Med nøkkel (Generer for meg)
+    - Select the supplier company and click **Next**
+    - Click **Legg til en offentlig tilgang**
+    - Search for "nav" and select the correct api
+    - Add a description
+    - Select integration method **Med nøkkel (Generer for meg)**
     - Set up a new integration and note the integration ID, scope and keys for later use.
 
 ---
