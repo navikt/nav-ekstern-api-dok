@@ -28,38 +28,37 @@ The easiest way to find a random test user.
 If you need more fine-grained control over the test users.
 1. Navigate to [Tenor testdatasøk](https://testdata.skatteetaten.no/web/testnorge/soek/freg).
 2. You must log in with your personal user, e.g. **BankID**.
-3. Find test-users of your choice.
+3. Find test users of your choice.
 4. Take note of the organization number and social security number.
 
 ---
 
 ## Delegating API Access in Altinn
-This section describes how the customer/"end user" can delegate API-access to a supplier, for instance LPS (Lønns- og personalsystem).
+This section describes how the customer can delegate API-access to a supplier.
 
 ### Step 1: Log into Altinn
 1. Navigate to the [Altinn Test Environment](https://tt02.altinn.no).
 2. Click **Logg inn**.
 3. Click **TestID på nivå høyt**.
-4. Use your customer/"end user" company test user's social security number.
+4. Use your customer test user's social security number.
 5. Click **Autentiser**.
 
 ### Step 2: Navigate to Delegable API
-1. Select the company you wish to delegate access to NAV's API. This should be the customer/"end user" company
-2. Go to your profile.
-3. Select "Tilgang til programmeringsgrensesnitt – API".
-4. Click on "Gi og fjerne API tilganger".
+1. Select the customer company.
+2. Click **profile** in the top menu.
+3. Click **Access to the application programming interface - API**.
+4. Click **Give and remove API accesses**.
 
 ### Step 3: Delegate API Access
 1. Search for the API:
-    - Click "Deleger nytt API".
-    - Search for the API you wish to delegate access to.
-    - Click the "+" to add it.
-    - Ensure it is added and click "Next".
+    - Click **Delegate new API**.
+    - Click the **+** to add the API you wish to delegate access to.
+    - Ensure it is added and click **Next**.
 2. Find the supplier/organization to delegate to:
     - Search for the supplier's organization number.
-    - Add them by clicking the "+".
-    - Click "Next" and then "Confirm".
-3. The supplier will now be able to access the API on behalf of the company when requesting a token from Maskinporten.
+    - Add them by clicking the **+**.
+    - Click **Next** and then **Confirm**.
+3. The supplier will now be able to access the API on behalf of the customer when requesting a token from Maskinporten.
 
 ---
 
