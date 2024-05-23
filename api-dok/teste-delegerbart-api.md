@@ -3,6 +3,7 @@
 ## Table of Contents
 1. [Finding Test Users](#finding-test-users)
 2. [Delegating API Access in Altinn](#delegating-api-access-in-altinn)
+3. [Set Up Integration in Maskinporten](#set-up-integration-in-maskinporten)
 3. [Fetching a Maskinporten Token using Postman](#fetching-a-maskinporten-token-using-postman)
 4. [Testing the Integration](#testing-the-integration)
 
@@ -61,7 +62,7 @@ This section describes how to delegate API-access from a customer/"end-user"-com
 2. **Create Integration:**
     - Click "Legg til en offentlig tilgang"
     - Velg integrasjonsmetode - Med nøkkel (Generer for meg)
-    - Create a new integration and note the integration ID, scope and keys for later use.
+    - Set up a new integration and note the integration ID, scope and keys for later use.
 
 ---
 
