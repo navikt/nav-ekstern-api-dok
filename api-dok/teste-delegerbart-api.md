@@ -13,14 +13,14 @@
 You will need to find two test-users. One acting as the customer/"end-user"-company and one as the supplier/organization. The following tools can be used to find test users:
 
 ### TestID
-- The easiest way to find a random test-user.
+The easiest way to find a random test-user.
 - Navigate to https://tt02.altinn.no and click "Logg inn"
 - Click "TestID på nivå høyt"
 - Click "Hent tilfeldig daglig leder"
 - Take note of the organization number and social security number.
 
 ### Test-Norge
-- If you need more fine-grained control over the test users.
+If you need more fine-grained control over the test users.
 - Navigate to [Test-Norge](https://testdata.skatteetaten.no/web/testnorge/soek/freg).
 - Locate test-users of your choice
 - Take note of the organization number and social security number.
