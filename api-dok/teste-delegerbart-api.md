@@ -1,3 +1,5 @@
+<details>
+<summary>API-dokumentasjon for helseområdet</summary>
 # Delegable API - Testing guide
 
 ## Table of Contents
@@ -110,3 +112,4 @@ This section describes how the customer/"end user" can delegate API-access to a 
 
 - Ensure the integration works by using the data from the created integration, private key matching the public key, and the organization number of the represented entity.
 - A valid token from Maskinporten should be obtained, which can be used against the NAV API.
+</details>
