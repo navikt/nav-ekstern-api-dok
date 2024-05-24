@@ -83,7 +83,7 @@ This section describes how the customer can delegate API-access to a supplier.
     - Copy the `jsrsasign` library into the environment from: [jsrsasign latest](http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js).
     - Create a JWT with valid claims signed with the private key:
       ```javascript
-      var rs = require('jsrsasign');
+      eval(pm.environment.get('jsrsasign-js'));
       var oHeader = {alg: 'RS256', typ: 'JWT'};
       var oPayload = {
         iss: 'integration_id',
