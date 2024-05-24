@@ -87,7 +87,7 @@ This section describes how the customer can delegate API-access to a supplier.
       var navigator = {};
       var window = {};
       eval(pm.environment.get('jsrsasign-js'));
-      var oHeader = {alg: 'RS256', typ: 'JWT'};
+      var oHeader = {alg: 'RS256', typ: 'JWT', kid: '<KID_FROM_FORENKLET_ONBOARDING>'};
       var oPayload = {
         iss: 'integration_id',
         scope: 'scope',
