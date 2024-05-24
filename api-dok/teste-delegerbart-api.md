@@ -83,6 +83,7 @@ This section describes how the customer can delegate API-access to a supplier.
     - Copy the `jsrsasign` library into the environment from: [jsrsasign latest](http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js).
     - Create a JWT with valid claims signed with the private key:
       ```javascript
+      var uuid = require('uuid');
       var navigator = {};
       var window = {};
       eval(pm.environment.get('jsrsasign-js'));
@@ -92,6 +93,7 @@ This section describes how the customer can delegate API-access to a supplier.
         scope: 'scope',
         aud: 'https://test.maskinporten.no/',
         exp: KJUR.jws.IntDate.get('now + 1hour'),
+        jti: uuid.v4(),
         iat: KJUR.jws.IntDate.get('now')
       };
       var sHeader = JSON.stringify(oHeader);
