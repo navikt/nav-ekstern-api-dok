@@ -77,38 +77,72 @@ This section describes how the customer can delegate API-access to a supplier.
 ---
 
 ## Fetching a Maskinporten Token using Postman
-1. **Create a New POST Request:**
+1. **Create a New Request:**
     - URL: `https://test.maskinporten.no/token`
-2. **Pre-request Script:**
-    - Copy the `jsrsasign` library into the environment from: [jsrsasign latest](http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js).
-    - Create a JWT with valid claims signed with the private key:
-      ```javascript
-      var uuid = require('uuid');
-      var navigator = {};
-      var window = {};
-      eval(pm.environment.get('jsrsasign-js'));
-      var oHeader = {alg: 'RS256', typ: 'JWT', kid: '<KID_FROM_FORENKLET_ONBOARDING>'};
-      var oPayload = {
-        iss: 'integration_id',
-        scope: 'scope',
-        aud: 'https://test.maskinporten.no/',
-        exp: KJUR.jws.IntDate.get('now + 1hour'),
-        jti: uuid.v4(),
-        iat: KJUR.jws.IntDate.get('now')
-      };
-      var sHeader = JSON.stringify(oHeader);
-      var sPayload = JSON.stringify(oPayload);
-      var privateKey = `-----BEGIN PRIVATE KEY-----\nMIIEv...`;
-      var sJWT = KJUR.jws.JWS.sign("RS256", sHeader, sPayload, privateKey);
-      postman.setEnvironmentVariable("jwt_signed", sJWT);
-      ```
-3. **Body:**
-    - Type: `x-www-form-urlencoded`
+    - Method: POST
+2. **Create a new Environment:**
+    - Add a new variable for the `jsrasign` library
+        - name: `jsrasign-js`
+        - value: Copy the [latest jsrsasign library](http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js) 
+    - Add a new variable for your private key
+        - name: `privateKey`
+        - type: `secret`
+        - value: Your private key that was generated in the *Set Up Integration In Maskinporten* step
+    - Save the environment
+    - Select the new environment
+        ![alt text](image-1.png)
+3. **Add a Pre-request Script:**
+    - Add a new Pre-request script from the `Scripts` tab with the following content
+        ```javascript
+        var uuid = require("uuid");
+        var navigator = {};
+        var window = {};
+        eval(pm.environment.get("jrsasign-js"));
+        var currentTimestamp = Math.floor(Date.now() / 1000)
+        // JWT headers
+        var header = {
+            "kid": "<REPLACE>",                            //KID - Integrations Key ID
+            "alg": "RS256"                                 // Algorithm used to generate keys
+        };
+        // JWT data
+        var data = {
+            "aud": "https://test.maskinporten.no/",        // Audience - Maskinporten test
+            "iss": "<REPLACE>",                            //Issuer - Integration ID
+            "scope": "<REPLACE>",                          // Scope created by Nav
+            "consumer_org": "<REPLACE>",                   // Organization number you want to represent
+            "iat": currentTimestamp, 
+            "exp": (currentTimestamp + 180),
+            "jti": uuid.v4(),
+        }
+        var sHeader = JSON.stringify(header);
+        console.log("sHeader", sHeader);
+        var sPayload = JSON.stringify(data);
+        console.log("sPayload", sPayload);
+        var privateKey = pm.environment.get("privateKey"); // Get private key from environment
+        
+        // JWK signed
+        var sJWT = KJUR.jws.JWS.sign(
+            header.alg, sHeader, sPayload, privateKey
+        );
+        // Save signed JWK
+        pm.environment.set('jwt_signed', sJWT);            // Creates new environment variable
+        ```
+    - Replace the following variables:
+        - `kid`: Use the Key-id from Forenklet Onboarding
+        - `iss`: Use the IntegrasjonsId from Forenklet Onboarding
+        - `scope`: Use the scope from Forenklet Onboarding
+        - `consumer_org`: Use the consumer company organization number
+        
+         ![alt text](image.png)  
+4. **Body:**
+    - In the `Body` tab select `x-www-form-urlencoded`
     - Include the following parameters:
         - `grant_type: urn:ietf:params:oauth:grant-type:jwt-bearer`
         - `assertion: {{jwt_signed}}`
-4. **Send Request:**
-    - Click "Send" to get a valid Maskinporten access token, which can be used against the NAV API.
+
+        ![alt text](image-2.png)
+5. **Send Request:**
+    - Click **Send** to get a valid Maskinporten access token, which can be used against the NAV API.
 
 ---
 
