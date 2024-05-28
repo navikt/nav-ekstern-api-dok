@@ -89,11 +89,11 @@ This section describes how the customer can delegate API-access to a supplier.
         - type: `secret`
         - current value: Your private key that was generated in the *Set Up Integration In Maskinporten* step
         
-    ![alt text](image-3.png)
+        ![A screenshot showing how the new environment should look](create-environment.png)
     - Save the environment
     - Select the new environment
 
-        ![alt text](image-1.png)
+        ![A screenshot showing how to selevt the newly created environment](select-environment.png)
 3. **Add a Pre-request Script:**
     - Add a new Pre-request script from the `Scripts` tab with the following content
         ```javascript
@@ -136,14 +136,14 @@ This section describes how the customer can delegate API-access to a supplier.
         - `scope`: Use the scope from Forenklet Onboarding
         - `consumer_org`: Use the consumer company organization number
 
-         ![alt text](image.png)  
+         ![A screenshot showing which variables from Maskinporten Onboarding should be inserted in the script](insert-vars-in-script.png)  
 4. **Body:**
     - In the `Body` tab select `x-www-form-urlencoded`
     - Include the following parameters:
         - `grant_type: urn:ietf:params:oauth:grant-type:jwt-bearer`
         - `assertion: {{jwt_signed}}`
 
-        ![alt text](image-2.png)
+        ![A screenshot of how the body parameters should look](body-parameters.png)
 5. **Send Request:**
     - Click **Send** to get a valid Maskinporten access token, which can be used against the NAV API.
 
