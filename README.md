@@ -24,4 +24,4 @@ In order to use these APIs, you need to have a Maskinporten client configured. P
 | Ytelsehistorikk               | https://navikt.github.io/pensjon-ekstern-api/api/ytelsehistorikk/ytelsehistorikk.html                         | false 
 ## Testing
 
-* [How to test delegable APIs](api-dok/teste-delegerbart-api.md)
+* [How to test delegable APIs](api-dok/teste-delegerbart-api/teste-delegerbart-api.md)
