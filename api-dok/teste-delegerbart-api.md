@@ -88,9 +88,9 @@ This section describes how the customer can delegate API-access to a supplier.
         - name: `privateKey`
         - type: `secret`
         - current value: Your private key that was generated in the *Set Up Integration In Maskinporten* step
+        
+    ![alt text](image-3.png)
     - Save the environment
-    
-        ![alt text](image-3.png)
     - Select the new environment
 
         ![alt text](image-1.png)
