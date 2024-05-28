@@ -11,7 +11,7 @@
 
 ## Finding Test Users
 You will need to find two test users from Test-Norge. 
-* The first user is acting as the *supplier* (LPS - Lønns- og personalsystem)
+* The first user is acting as the *supplier* (e.g. LPS - Lønns- og personalsystem)
 * The second user is acting as the *customer* ("end-user"-company that will use the LPS system)
 
 The following tools can be used to find test users:
