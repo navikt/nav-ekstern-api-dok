@@ -78,18 +78,21 @@ This section describes how the customer can delegate API-access to a supplier.
 
 ## Fetching a Maskinporten Token using Postman
 1. **Create a New Request:**
+    - Method: `POST`
     - URL: `https://test.maskinporten.no/token`
-    - Method: POST
 2. **Create a new Environment:**
     - Add a new variable for the `jsrasign` library
-        - name: `jsrasign-js`
-        - value: Copy the [latest jsrsasign library](http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js) 
+        - name: `jsrsasign-js`
+        - current value: Copy the [latest jsrsasign library](http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js) 
     - Add a new variable for your private key
         - name: `privateKey`
         - type: `secret`
-        - value: Your private key that was generated in the *Set Up Integration In Maskinporten* step
+        - current value: Your private key that was generated in the *Set Up Integration In Maskinporten* step
     - Save the environment
+    
+        ![alt text](image-3.png)
     - Select the new environment
+
         ![alt text](image-1.png)
 3. **Add a Pre-request Script:**
     - Add a new Pre-request script from the `Scripts` tab with the following content
@@ -97,11 +100,11 @@ This section describes how the customer can delegate API-access to a supplier.
         var uuid = require("uuid");
         var navigator = {};
         var window = {};
-        eval(pm.environment.get("jrsasign-js"));
+        eval(pm.environment.get("jsrsasign-js"));
         var currentTimestamp = Math.floor(Date.now() / 1000)
         // JWT headers
         var header = {
-            "kid": "<REPLACE>",                            //KID - Integrations Key ID
+            "kid": "<REPLACE>",                            // KID - Integrations Key ID
             "alg": "RS256"                                 // Algorithm used to generate keys
         };
         // JWT data
@@ -132,7 +135,7 @@ This section describes how the customer can delegate API-access to a supplier.
         - `iss`: Use the IntegrasjonsId from Forenklet Onboarding
         - `scope`: Use the scope from Forenklet Onboarding
         - `consumer_org`: Use the consumer company organization number
-        
+
          ![alt text](image.png)  
 4. **Body:**
     - In the `Body` tab select `x-www-form-urlencoded`
