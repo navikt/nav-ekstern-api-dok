@@ -22,7 +22,8 @@ The easiest way to find a random test user.
 2. Click **TestID på nivå høyt**.
 3. Click **Hent tilfeldig daglig leder**.
 4. Take note of the organization number (*Organisasjonsnummer*) and social security number (*Personidentifikator*).
-5. You can click **Hent tilfeldig daglig leder** one more time to get the second test user.
+5. Log in with the user, this is important for Altinn to recognize the user as a test user.
+6. You can click **Hent tilfeldig daglig leder** one more time to get the second test user.
 
 ### Tenor testdatasøk
 If you need more fine-grained control over the test users.
@@ -45,9 +46,10 @@ This section describes how the customer can delegate API-access to a supplier.
 
 ### Step 2: Navigate to Delegable API
 1. Select the customer company.
-2. Click **profile** in the top menu.
-3. Click **Access to the application programming interface - API**.
-4. Click **Give and remove API accesses**.
+2. Take note of the company's organization number - this is used later when requesting token from Maskinporten.
+3. Click **profile** in the top menu.
+4. Click **Access to the application programming interface - API**.
+5. Click **Give and remove API accesses**.
 
 ### Step 3: Delegate API Access
 1. Search for the API:
@@ -72,7 +74,7 @@ This section describes how the customer can delegate API-access to a supplier.
     - Search for "nav" and select the correct api
     - Add a description
     - Select integration method **Med nøkkel (Generer for meg)**
-    - Set up a new integration and note the integration ID, scope and keys for later use.
+    - Set up a new integration and note the integration ID, kid, scope and keys for later use.
 
 ---
 
