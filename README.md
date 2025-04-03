@@ -24,6 +24,7 @@ In order to use these APIs, you need to have a Maskinporten client configured. P
 | Ytelsehistorikk               | https://navikt.github.io/pensjon-ekstern-api/api/ytelsehistorikk/ytelsehistorikk.html                         | false     |
 
 
+## API-documentation: Cash-For-Care (Kontantstøtte)
 | API                           | Swagger                                                           | Delegable |
 |-------------------------------|-------------------------------------------------------------------|-----------|
 | Innsending av barnehagelister | https://familie-ks-barnehagelister.nav.no/swagger-ui/index.html#/ | true      |
