@@ -21,7 +21,14 @@ In order to use these APIs, you need to have a Maskinporten client configured. P
 | AFP Privat                    | https://navikt.github.io/pensjon-ekstern-api/api/afpprivat/AfpPrivat.html                                     | false     |
 | Dokumentasjon Fellesordningen | https://navikt.github.io/pensjon-ekstern-api/fellesordningen/fellesordningen.html                             | false     |
 | AfpGrunnlagBeholdning         | https://navikt.github.io/pensjon-ekstern-api/api/afpgrunnlagbeholdning/afp-grunnlag-beholdning.html           | false     |
-| Ytelsehistorikk               | https://navikt.github.io/pensjon-ekstern-api/api/ytelsehistorikk/ytelsehistorikk.html                         | false 
+| Ytelsehistorikk               | https://navikt.github.io/pensjon-ekstern-api/api/ytelsehistorikk/ytelsehistorikk.html                         | false     |
+
+
+## API-documentation: Cash-For-Care (Kontantstøtte)
+| API                           | Swagger                                                           | Delegable |
+|-------------------------------|-------------------------------------------------------------------|-----------|
+| Innsending av barnehagelister | https://familie-ks-barnehagelister.nav.no/swagger-ui/index.html#/ | true      |
+
 ## Testing
 
 * [How to test APIs with delegation](api-dok/teste-delegerbart-api/teste-delegerbart-api.md)
