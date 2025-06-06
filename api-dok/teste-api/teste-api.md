@@ -28,19 +28,19 @@ If you need more fine-grained control over the test user.
 ---
 
 ## Set Up Integration in Maskinporten
-1. **Log into Forenklet onboarding:**
+1. **Log into Selvbetjening for Maskinporten at DigDir:**
     - Navigate to [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no)
+    - Choose if you want to use an existing org you have access to, or if you want to create a synthetic org.
     - Log in using your own BankId.
-    - Choose the synthetic org you want to represent, or create a new. You can change this later.
 
-2. **Create MAskinporten Client:**
-    - Select the relevant company and click **Next**
+2. **Create Maskinporten Client:**
     - Click "+Create Client"
     - Choose "Maskinporten"
     - Set the name you want for the client.
     - Select the scope you want to use. (You can search for scopes from Nav)
     - Click "Create" then select your newly created Client
     - Make a note of your clientId (You can also find it again later using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
+   
       ![A screenshot showing how to create the maskinporten client](../images/create-maskinporten-client.png)
 3. **Add key to your client:**
   - Select your create key.
@@ -53,6 +53,8 @@ openssl rsa -in maskinporten-rs256.priv.key -pubout -out maskinporten-rs256.pub.
 ```
   - Paste the content of the public key into the "Add key" dialog
   - Make a note of your keyId (You can also find it again later using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
+
+---
 
 ## Fetching a Maskinporten Token using Postman
 1. **Create a New Request:**

@@ -66,16 +66,31 @@ This section describes how the customer can delegate API-access to a supplier.
 ---
 
 ## Set Up Integration in Maskinporten
-1. **Log into Forenklet onboarding:**
-    - Navigate to [Maskinporten Onboarding Pilot](https://onboarding.test.maskinporten.no/)
-    - Log in using TestID with the supplier's social security number.
-2. **Create Integration:**
-    - Select the supplier company and click **Next**
-    - Click **Legg til en offentlig tilgang**
-    - Search for "nav" and select the correct api
-    - Add a description
-    - Select integration method **Med nøkkel (Generer for meg)**
-    - Set up a new integration and note the integration ID, kid, scope and keys for later use.
+1. **Log into Selvbetjening for Maskinporten at DigDir:**
+   - Navigate to [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no)
+   - Choose if you want to use an existing org you have access to, or if you want to create a synthetic org.
+   - Log in using your own BankId.
+
+2. **Create Maskinporten Client:**
+   - Click "+Create Client"
+   - Choose "Maskinporten"
+   - Set the name you want for the client.
+   - Select the scope you want to use. (You can search for scopes from Nav)
+   - Click "Create" then select your newly created Client
+   - Make a note of your clientId (You can also find it again later using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
+   
+     ![A screenshot showing how to create the maskinporten client](../images/create-maskinporten-client.png)
+3. **Add key to your client:**
+- Select your create key.
+- Select the "Keys" tab and click "+Add"
+- Create a pair of private and public PEM keys. For instance using commands like these.
+- Make a note of your keyId (You can also find it again later using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
+```bash
+openssl genpkey -algorithm RSA -out maskinporten-rs256.priv.key -pkeyopt rsa_keygen_bits:4096
+openssl rsa -in maskinporten-rs256.priv.key -pubout -out maskinporten-rs256.pub.key
+```
+- Paste the content of the public key into the "Add key" dialog
+- Make a note of your keyId (You can also find it again later using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
 
 ---
 
