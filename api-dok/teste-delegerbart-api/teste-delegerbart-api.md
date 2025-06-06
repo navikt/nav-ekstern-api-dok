@@ -23,7 +23,8 @@ The easiest way to find a random test user.
 3. Click **Hent tilfeldig daglig leder**.
 4. Take note of the organization number (*Organisasjonsnummer*) and social security number (*Personidentifikator*).
 5. Log in with the user, this is important for Altinn to recognize the user as a test user.
-6. You can click **Hent tilfeldig daglig leder** one more time to get the second test user.
+6. Log out and click **Logg inn** again, then repeat steps 2 to 5 again to prepare the secon test user.
+   Alternatively you can log inn to [Altinn Test Environment](https://tt02.altinn.no) in an incognito tab and repeat steps 2 to 5 to keep both session alive simultaneously
 
 ### Tenor testdatasøk
 If you need more fine-grained control over the test users.
@@ -38,7 +39,7 @@ If you need more fine-grained control over the test users.
 This section describes how the customer can delegate API-access to a supplier.
 
 ### Step 1: Log into Altinn
-1. Navigate to the [Altinn Test Environment](https://tt02.altinn.no).
+1. Navigate to the [Altinn Test Environment](https://tt02.altinn.no), or use an existing logged in session if you have one.
 2. Click **Logg inn**.
 3. Click **TestID på nivå høyt**.
 4. Use your customer test user's social security number.
