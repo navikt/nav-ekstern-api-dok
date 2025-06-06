@@ -29,17 +29,30 @@ If you need more fine-grained control over the test user.
 
 ## Set Up Integration in Maskinporten
 1. **Log into Forenklet onboarding:**
-    - Navigate to [Maskinporten Onboarding Pilot](https://onboarding.test.maskinporten.no/)
-    - Log in using TestID with the test users social security number.
-2. **Create Integration:**
-    - Select the relevant company and click **Next**
-    - Click **Legg til en offentlig tilgang**
-    - Search for "nav" and select the correct api
-    - Add a description
-    - Select integration method **Med nøkkel (Generer for meg)**
-    - Set up a new integration and note the integration ID, scope and keys for later use.
+    - Navigate to [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no)
+    - Log in using your own BankId.
+    - Choose the synthetic org you want to represent, or create a new. You can change this later.
 
----
+2. **Create MAskinporten Client:**
+    - Select the relevant company and click **Next**
+    - Click "+Create Client"
+    - Choose "Maskinporten"
+    - Set the name you want for the client.
+    - Select the scope you want to use. (You can search for scopes from Nav)
+    - Click "Create" then select your newly created Client
+    - Make a note of your clientId (You can also find it again later using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
+      ![A screenshot showing how to create the maskinporten client](../images/create-maskinporten-client.png)
+3. **Add key to your client:**
+  - Select your create key.
+  - Select the "Keys" tab and click "+Add"
+  - Create a pair of private and public PEM keys. For instance using commands like these.
+  - Make a note of your keyId (You can also find it again later using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
+```bash
+openssl genpkey -algorithm RSA -out maskinporten-rs256.priv.key -pkeyopt rsa_keygen_bits:4096
+openssl rsa -in maskinporten-rs256.priv.key -pubout -out maskinporten-rs256.pub.key
+```
+  - Paste the content of the public key into the "Add key" dialog
+  - Make a note of your keyId (You can also find it again later using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
 
 ## Fetching a Maskinporten Token using Postman
 1. **Create a New Request:**
@@ -53,12 +66,24 @@ If you need more fine-grained control over the test user.
         - name: `privateKey`
         - type: `secret`
         - current value: Your private key that was generated in the *Set Up Integration In Maskinporten* step
-        
-        ![A screenshot showing how the new environment should look](create-environment.png)
+    - Add a new variable for your Maskinporten clientId 
+      - name: `clientId`
+      - type: `default`
+      - current value: The clientId that was created for you in the *Set Up Integration In Maskinporten* step
+    - Add a new variable for id of the key you added to your client
+       - name: `keyId`
+       - type: `default`
+       - current value: Key ID that was created for you in the *Set Up Integration In Maskinporten* step
+    - Add a new variable for your the scope you want to create a token for
+       - name: `scope`
+       - type: `default`
+       - current value: Use the scope from the *Set Up Integration In Maskinporten* step
+
+         ![A screenshot showing how the new environment should look](../images/create-environment.png)
     - Save the environment
     - Select the new environment
 
-        ![A screenshot showing how to selevt the newly created environment](select-environment.png)
+        ![A screenshot showing how to select the newly created environment](../images/select-environment.png)
 3. **Add a Pre-request Script:**
     - Add a new Pre-request script from the `Scripts` tab with the following content
         ```javascript
@@ -67,20 +92,26 @@ If you need more fine-grained control over the test user.
         var window = {};
         eval(pm.environment.get("jsrsasign-js"));
         var currentTimestamp = Math.floor(Date.now() / 1000)
+        var issuer =  pm.environment.get("clientId")
+        var kid =  pm.environment.get("keyId")
+        var scope =  pm.environment.get("scope")
+        var consumerOrg =  pm.environment.get("onBehalfOfOrgnummer")
         // JWT headers
         var header = {
-            "kid": "<REPLACE>",                            // KID - Integrations Key ID
-            "alg": "RS256"                                 // Algorithm used to generate keys
+            "kid": kid,                             // KID - Integrations Key ID
+            "alg": "RS256"                          // Algorithm used to generate keys
         };
         // JWT data
         var data = {
-            "aud": "https://test.maskinporten.no/",        // Audience - Maskinporten test
-            "iss": "<REPLACE>",                            //Issuer - Integration ID
-            "scope": "<REPLACE>",                          // Scope created by Nav
-            "iat": currentTimestamp, 
+            "aud": "https://test.maskinporten.no/", // Audience - Maskinporten test
+            "iss": issuer,                          // Issuer - Integration ID
+            "scope": scope,                         // Scope created by Nav
+            "iat": currentTimestamp,
             "exp": (currentTimestamp + 180),
             "jti": uuid.v4(),
+            "consumer_org": consumerOrg,
         }
+
         var sHeader = JSON.stringify(header);
         console.log("sHeader", sHeader);
         var sPayload = JSON.stringify(data);
@@ -94,19 +125,14 @@ If you need more fine-grained control over the test user.
         // Save signed JWK
         pm.environment.set('jwt_signed', sJWT);            // Creates new environment variable
         ```
-    - Replace the following variables:
-        - `kid`: Use the Key-id from Forenklet Onboarding
-        - `iss`: Use the IntegrasjonsId from Forenklet Onboarding
-        - `scope`: Use the scope from Forenklet Onboarding
 
-         ![A screenshot showing which variables from Maskinporten Onboarding should be inserted in the script](insert-vars-in-script.png)  
 4. **Body:**
     - In the `Body` tab select `x-www-form-urlencoded`
     - Include the following parameters:
         - `grant_type: urn:ietf:params:oauth:grant-type:jwt-bearer`
         - `assertion: {{jwt_signed}}`
 
-        ![A screenshot of how the body parameters should look](body-parameters.png)
+        ![A screenshot of how the body parameters should look](../images/body-parameters.png)
 5. **Send Request:**
     - Click **Send** to get a valid Maskinporten access token, which can be used against the NAV API.
 

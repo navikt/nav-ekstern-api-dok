@@ -23,7 +23,8 @@ The easiest way to find a random test user.
 3. Click **Hent tilfeldig daglig leder**.
 4. Take note of the organization number (*Organisasjonsnummer*) and social security number (*Personidentifikator*).
 5. Log in with the user, this is important for Altinn to recognize the user as a test user.
-6. You can click **Hent tilfeldig daglig leder** one more time to get the second test user.
+6. Log out and click **Logg inn** again, then repeat steps 2 to 5 again to prepare the secon test user.
+   Alternatively you can log inn to [Altinn Test Environment](https://tt02.altinn.no) in an incognito tab and repeat steps 2 to 5 to keep both session alive simultaneously
 
 ### Tenor testdatasøk
 If you need more fine-grained control over the test users.
@@ -38,7 +39,7 @@ If you need more fine-grained control over the test users.
 This section describes how the customer can delegate API-access to a supplier.
 
 ### Step 1: Log into Altinn
-1. Navigate to the [Altinn Test Environment](https://tt02.altinn.no).
+1. Navigate to the [Altinn Test Environment](https://tt02.altinn.no), or use an existing logged in session if you have one.
 2. Click **Logg inn**.
 3. Click **TestID på nivå høyt**.
 4. Use your customer test user's social security number.
@@ -90,12 +91,28 @@ This section describes how the customer can delegate API-access to a supplier.
         - name: `privateKey`
         - type: `secret`
         - current value: Your private key that was generated in the *Set Up Integration In Maskinporten* step
-        
-        ![A screenshot showing how the new environment should look](create-environment.png)
+    - Add a new variable for your Maskinporten clientId
+        - name: `clientId`
+        - type: `default`
+        - current value: The clientId that was created for you in the *Set Up Integration In Maskinporten* step
+    - Add a new variable for id of the key you added to your client
+        - name: `keyId`
+        - type: `default`
+        - current value: Key ID that was created for you in the *Set Up Integration In Maskinporten* step
+    - Add a new variable for your the scope you want to create a token for
+        - name: `scope`
+        - type: `default`
+        - current value: Use the scope from the *Set Up Integration In Maskinporten* step
+    - Add a new variable for the orgnumer you want to represent
+        - name: `onBehalfOfOrgnummer`
+        - type: `default`
+        - current value: The orgnumer you are going to represent when using the token from Maskinporten
+
+        ![A screenshot showing how the new environment should look](../images/create-environment-onBehalfOf.png)
     - Save the environment
     - Select the new environment
 
-        ![A screenshot showing how to selevt the newly created environment](select-environment.png)
+        ![A screenshot showing how to selevt the newly created environment](../images/select-environment.png)
 3. **Add a Pre-request Script:**
     - Add a new Pre-request script from the `Scripts` tab with the following content
         ```javascript
@@ -104,21 +121,26 @@ This section describes how the customer can delegate API-access to a supplier.
         var window = {};
         eval(pm.environment.get("jsrsasign-js"));
         var currentTimestamp = Math.floor(Date.now() / 1000)
+        var issuer =  pm.environment.get("clientId")
+        var kid =  pm.environment.get("keyId")
+        var scope =  pm.environment.get("scope")
+        var consumerOrg =  pm.environment.get("onBehalfOfOrgnummer")
         // JWT headers
         var header = {
-            "kid": "<REPLACE>",                            // KID - Integrations Key ID
-            "alg": "RS256"                                 // Algorithm used to generate keys
+            "kid": kid,                             // KID - Integrations Key ID
+            "alg": "RS256"                          // Algorithm used to generate keys
         };
         // JWT data
         var data = {
-            "aud": "https://test.maskinporten.no/",        // Audience - Maskinporten test
-            "iss": "<REPLACE>",                            //Issuer - Integration ID
-            "scope": "<REPLACE>",                          // Scope created by Nav
-            "consumer_org": "<REPLACE>",                   // Organization number you want to represent
-            "iat": currentTimestamp, 
+            "aud": "https://test.maskinporten.no/", // Audience - Maskinporten test
+            "iss": issuer,                          // Issuer - Integration ID
+            "scope": scope,                         // Scope created by Nav
+            "iat": currentTimestamp,
             "exp": (currentTimestamp + 180),
             "jti": uuid.v4(),
+            "consumer_org": consumerOrg,
         }
+
         var sHeader = JSON.stringify(header);
         console.log("sHeader", sHeader);
         var sPayload = JSON.stringify(data);
@@ -132,20 +154,14 @@ This section describes how the customer can delegate API-access to a supplier.
         // Save signed JWK
         pm.environment.set('jwt_signed', sJWT);            // Creates new environment variable
         ```
-    - Replace the following variables:
-        - `kid`: Use the Key-id from Forenklet Onboarding
-        - `iss`: Use the IntegrasjonsId from Forenklet Onboarding
-        - `scope`: Use the scope from Forenklet Onboarding
-        - `consumer_org`: Use the consumer company organization number
 
-         ![A screenshot showing which variables from Maskinporten Onboarding should be inserted in the script](insert-vars-in-script.png)  
 4. **Body:**
     - In the `Body` tab select `x-www-form-urlencoded`
     - Include the following parameters:
         - `grant_type: urn:ietf:params:oauth:grant-type:jwt-bearer`
         - `assertion: {{jwt_signed}}`
 
-        ![A screenshot of how the body parameters should look](body-parameters.png)
+        ![A screenshot of how the body parameters should look](../images/body-parameters.png)
 5. **Send Request:**
     - Click **Send** to get a valid Maskinporten access token, which can be used against the NAV API.
 
