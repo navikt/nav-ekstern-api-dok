@@ -97,7 +97,7 @@ This section describes how the customer can delegate API-access to a supplier.
       ![A screenshot showing how to create the maskinporten client](../images/create-maskinporten-client.png)
 3. **Add key to your client:**
 
-- Select your create key.
+- Select your created key.
 - Select the "Keys" tab and click "+Add"
 - Create a pair of private and public PEM keys. For instance using commands like these.
 - Make a note of your keyId (You can also find it again later
