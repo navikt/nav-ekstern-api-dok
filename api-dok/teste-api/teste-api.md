@@ -52,18 +52,20 @@ If you need more fine-grained control over the test user.
       ![A screenshot showing how to create the maskinporten client](../images/create-maskinporten-client.png)
 3. **Add key to your client:**
 
-- Select your create key.
-- Select the "Keys" tab and click "+Add"
-- Create a pair of private and public PEM keys. For instance using commands like these.
-- Make a note of your keyId (You can also find it again later
-  using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
+You need to add a key to your client. This key will be used to sign the JWT used to fetch a token from Maskinporten.
 
-```bash
-openssl genpkey -algorithm RSA -out maskinporten-rs256.priv.key -pkeyopt rsa_keygen_bits:4096
-openssl rsa -in maskinporten-rs256.priv.key -pubout -out maskinporten-rs256.pub.key
-```
-
-- Paste the content of the public key into the "Add key" dialog
+- Select the "Keys" tab and click "+ Add key"
+- You have now two choices (automatic:
+    - Automatic key generation by Maskinporten: Choose flag "Generate key instead" and the button "Generate key". This
+      will create a pair of private and public PEM keys. Make a note of your private key (You can only see it
+      once). ![Add key with generate option](../images/add-generate-key.png)
+    - Manual key generation: Choose flag "Add key". Create a pair of private and public PEM keys. For instance using
+      commands like these:
+      ```bash
+      openssl genpkey -algorithm RSA -out maskinporten-rs256.priv.key -pkeyopt rsa_keygen_bits:4096
+      openssl rsa -in maskinporten-rs256.priv.key -pubout -out maskinporten-rs256.pub.key
+      ```
+      Paste the content of the public key into the "Add key" dialog
 - Make a note of your keyId (You can also find it again later
   using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
 
