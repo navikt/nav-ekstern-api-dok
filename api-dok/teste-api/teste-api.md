@@ -4,7 +4,7 @@
 
 1. [Finding Test Users](#finding-test-users)
 2. [Set Up Integration in Maskinporten](#set-up-integration-in-maskinporten)
-3. [Fetching a Maskinporten Token using Postman](#fetching-a-maskinporten-token-using-postman)
+3. [Fetching a Maskinporten Token using Bruno or Postman](#fetching-a-maskinporten-token-using-bruno-or-postman)
 4. [Testing the Integration](#testing-the-integration)
 
 ---
@@ -71,13 +71,13 @@ You need to add a key to your client. This key will be used to sign the JWT used
 
 ---
 
-## Fetching a Maskinporten Token using Postman
+## Fetching a Maskinporten Token using Bruno or Postman
 
 1. **Create a New Request:**
     - Method: `POST`
     - URL: `https://test.maskinporten.no/token`
 2. **Create a new Environment:**
-    - Add a new variable for the `jsrasign` library
+    - Add a new variable for the `jsrasign` library (only required for Postman)
         - name: `jsrsasign-js`
         - current value: Copy
           the [latest jsrsasign library](http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js)
@@ -103,47 +103,17 @@ You need to add a key to your client. This key will be used to sign the JWT used
     - Select the new environment
 
       ![A screenshot showing how to select the newly created environment](../images/select-environment.png)
-3. **Add a Pre-request Script:**
-    - Add a new Pre-request script from the `Scripts` tab with the following content
-        ```javascript
-        var uuid = require("uuid");
-        var navigator = {};
-        var window = {};
-        eval(pm.environment.get("jsrsasign-js"));
-        var currentTimestamp = Math.floor(Date.now() / 1000)
-        var issuer =  pm.environment.get("clientId")
-        var kid =  pm.environment.get("keyId")
-        var scope =  pm.environment.get("scope")
-        var consumerOrg =  pm.environment.get("onBehalfOfOrgnummer")
-        // JWT headers
-        var header = {
-            "kid": kid,                             // KID - Integrations Key ID
-            "alg": "RS256"                          // Algorithm used to generate keys
-        };
-        // JWT data
-        var data = {
-            "aud": "https://test.maskinporten.no/", // Audience - Maskinporten test
-            "iss": issuer,                          // Issuer - Integration ID
-            "scope": scope,                         // Scope created by Nav
-            "iat": currentTimestamp,
-            "exp": (currentTimestamp + 180),
-            "jti": uuid.v4(),
-            "consumer_org": consumerOrg,
-        }
 
-        var sHeader = JSON.stringify(header);
-        console.log("sHeader", sHeader);
-        var sPayload = JSON.stringify(data);
-        console.log("sPayload", sPayload);
-        var privateKey = pm.environment.get("privateKey"); // Get private key from environment
-        
-        // JWK signed
-        var sJWT = KJUR.jws.JWS.sign(
-            header.alg, sHeader, sPayload, privateKey
-        );
-        // Save signed JWK
-        pm.environment.set('jwt_signed', sJWT);            // Creates new environment variable
-        ```
+3. **Add a Pre-request Script:**
+
+The pre-request script generates a signed JWT using the private key and other environment variables.  
+It then stores the signed token as an environment variable named `jwt_signed`, which is later used in the request body.  
+
+You can add the script in the **Scripts** tab, either in Bruno or Postman:
+
+[Pre-request script for Bruno](../scripts/pre-request-script-bruno.js)
+
+[Pre-request script for Postman](../scripts/pre-request-script-postman.js)
 
 4. **Body:**
     - In the `Body` tab select `x-www-form-urlencoded`
@@ -152,6 +122,7 @@ You need to add a key to your client. This key will be used to sign the JWT used
         - `assertion: {{jwt_signed}}`
 
       ![A screenshot of how the body parameters should look](../images/body-parameters.png)
+
 5. **Send Request:**
     - Click **Send** to get a valid Maskinporten access token, which can be used against the NAV API.
 
