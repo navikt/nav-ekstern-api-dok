@@ -39,6 +39,10 @@ If you need more fine-grained control over the test user.
     - Navigate to [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no)
     - Choose if you want to use an existing org you have access to, or if you want to create a synthetic org.
     - Log in using your own BankId.
+    - Check if you have access to the org you want to in the upper right corner. If you have chosen synthetic org, you
+      can change it to the org you want to by clicking the org number in the top right corner.
+
+      ![A screenshot showing how to select the organization](../images/select-organization.png)
 
 2. **Create Maskinporten Client:**
     - Click "+Create Client"
@@ -108,7 +112,7 @@ You need to add a key to your client. This key will be used to sign the JWT used
 3. **Add a Pre-request Script:**
 
 The pre-request script generates a signed JWT using the private key and other environment variables.  
-It then stores the signed token as an environment variable named `jwt_signed`, which is later used in the request body.  
+It then stores the signed token as an environment variable named `jwt_signed`, which is later used in the request body.
 
 You can add the script in the **Scripts** tab, either in Bruno or Postman:
 
