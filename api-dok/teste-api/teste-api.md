@@ -93,7 +93,7 @@ You need to add a key to your client. This key will be used to sign the JWT used
         - name: `keyId`
         - type: `default`
         - current value: Key ID that was created for you in the *Set Up Integration In Maskinporten* step
-    - Add a new variable for your the scope you want to create a token for
+    - Add a new variable for the scope you want to create a token for
         - name: `scope`
         - type: `default`
         - current value: Use the scope from the *Set Up Integration In Maskinporten* step

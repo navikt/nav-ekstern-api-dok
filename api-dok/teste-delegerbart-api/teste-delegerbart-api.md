@@ -95,6 +95,7 @@ This section describes how the customer can delegate API-access to a supplier.
       using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
 
       ![A screenshot showing how to create the maskinporten client](../images/create-maskinporten-client.png)
+
 3. **Add key to your client:**
 
 You need to add a key to your client. This key will be used to sign the JWT used to fetch a token from Maskinporten.
@@ -113,7 +114,6 @@ You need to add a key to your client. This key will be used to sign the JWT used
       Paste the content of the public key into the "Add key" dialog
 - Make a note of your keyId (You can also find it again later
   using [Maskinporten selvbetjening](https://sjolvbetjening.test.samarbeid.digdir.no))
-
 
 ---
 
@@ -139,7 +139,7 @@ You need to add a key to your client. This key will be used to sign the JWT used
         - name: `keyId`
         - type: `default`
         - current value: Key ID that was created for you in the *Set Up Integration In Maskinporten* step
-    - Add a new variable for your the scope you want to create a token for
+    - Add a new variable for the scope you want to create a token for
         - name: `scope`
         - type: `default`
         - current value: Use the scope from the *Set Up Integration In Maskinporten* step
