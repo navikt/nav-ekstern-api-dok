@@ -100,6 +100,7 @@ This section describes how the customer can delegate API-access to a supplier.
 
 You need to add a key to your client. This key will be used to sign the JWT used to fetch a token from Maskinporten.
 
+- Open the created client you created in the previous step
 - Select the "Keys" tab and click "+ Add key"
 - You have now two choices:
     - Automatic key generation by Maskinporten: Choose flag "Generate key instead" and the button "Generate key". This
