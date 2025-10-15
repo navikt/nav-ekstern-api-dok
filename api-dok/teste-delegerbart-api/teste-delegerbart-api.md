@@ -152,7 +152,8 @@ You need to add a key to your client. This key will be used to sign the JWT used
     - Save the environment
     - Select the new environment
 
-      ![A screenshot showing how to selevt the newly created environment](../images/select-environment.png)
+      ![A screenshot showing how to select the newly created environment](../images/select-environment.png)
+
 3. **Add a Pre-request Script:**
     - Add a new Pre-request script from the `Scripts` tab with the following content
         ```javascript
